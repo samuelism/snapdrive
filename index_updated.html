@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Folder Upload & Download</title>
+  <script>
+    UPLOADCARE_PUBLIC_KEY = 'e6f2a9e858e91a61e729';
+  </script>
+  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #007acc;
+      margin-bottom: 20px;
+    }
+
+    .upload-section {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .upload-section button {
+      padding: 12px 20px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .upload-section button:hover {
+      background: #005fa3;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      width: 100%;
+      max-width: 600px;
+      margin-top: 30px;
+    }
+
+    li {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn {
+      background: #28a745;
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #218838;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload & Download .zip Folders</h1>
+
+  <div class="upload-section">
+    <p>Select one or more .zip files to upload:</p>
+    <input
+      type="hidden"
+      role="uploadcare-uploader"
+      data-multiple="true"
+      data-public-key="e6f2a9e858e91a61e729"
+      data-tabs="file url"
+      data-clearable="true"
+      id="uploader" />
+    <button onclick="openUploader()">Choose Files</button>
+  </div>
+
+  <ul id="file-list"></ul>
+
+  <footer>Powered by Uploadcare & Netlify</footer>
+
+  <script>
+    const widget = uploadcare.Widget('#uploader');
+    function openUploader() {
+      widget.openDialog(null, { multiple: true });
+    }
+
+    widget.onUploadComplete((info) => {
+      const list = document.getElementById('file-list');
+      const item = document.createElement('li');
+      item.innerHTML = `
+        <span>${info.name}</span>
+        <a href="${info.cdnUrl}" class="btn" download>Download</a>
+      `;
+      list.appendChild(item);
+    });
+  </script>
+
+<script>
+  const FILEBASE_ACCESS_KEY = "023E7D84C37BFA3F158D";
+  const FILEBASE_SECRET_KEY = "raI2gM7gWJl6O818T9K3wt3jeUUtQKwt52GHsXvw";
+  const FILEBASE_ENDPOINT = "https://s3.filebase.com";
+</script>
+
+</body>
+</html>
